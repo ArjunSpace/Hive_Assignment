@@ -1,0 +1,14 @@
+
+
+  A. 
+     select sum(sales) from sales_order_data_orc 
+     group by year_id;
+     
+     
+     3516979.547241211
+     4724162.593383789
+     1791486.7086791992
+     
+  B. 
+     
+     
