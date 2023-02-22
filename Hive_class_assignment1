@@ -1,14 +1,112 @@
+--- craeting table 
+create table sales_order (
+     order_number int,
+     quantity_ordered int,
+     price_each float,
+     order_line_number int,
+     sales float,
+     status string,
+     qtr_id int,
+     month_id int,
+     year_id int,
+     product_line string,
+     msrp int,
+     product_code string,
+     phone string,
+     city string,
+     state string,
+     postal_code string,
+     country string,
+     territory string,
+     contact_last_name string,
+     contact_first_name string,
+     deal_size string)
+     row format delimited
+     fields terminated by ','
+     tblproperties("skip.header.line.count"="1");
+     
+  --- loading data into hdfs 
+   hadoop fs -put 'sales_order_data.csv' /tmp
+   
+  --- load data into table from hdfs location
+  load data inpath '/tmp/sales_order_data.csv' into table sales_order;
+  
+  --- setting property to print header
+  set hive.cli.print.header = true;
+  
+  
+  --- creating orc table
+  create table sales_order_orc (
+     order_number int,
+     quantity_ordered int,
+     price_each float,
+     order_line_number int,
+     sales float,
+     status string,
+     qtr_id int,
+     month_id int,
+     year_id int,
+     product_line string,
+     msrp int,
+     product_code string,
+     phone string,
+     city string,
+     state string,
+     postal_code string,
+     country string,
+     territory string,
+     contact_last_name string,
+     contact_first_name string,
+     deal_size string)
+     stored as orc;
+     
+  --- load data into orc table
+  from sales_order insert overwrite table sales_order_orc select *;
+
+----Perform below menioned queries on "sales_order_orc" table :
+
+a. Calculatye total sales per year
+b. Find a product for which maximum orders were placed
+c. Calculate the total sales for each quarter
+d. In which quarter sales was minimum
+e. In which country sales was maximum and in which country sales was minimum
+f. Calculate quartelry sales for each city
+h. Find a month for each year in which maximum number of quantities were sold
 
 
-  A. 
-     select sum(sales) from sales_order_data_orc 
-     group by year_id;
+  A. Calculatye total sales per year
      
+     select year_id, sum(sales) as total_sales from sales_order_orc group by year_id ;
+    O/P:
+    
+        year_id total_sales
+        2003    3516979.547241211
+        2004    4724162.593383789
+        2005    1791486.7086791992
      
-     3516979.547241211
-     4724162.593383789
-     1791486.7086791992
+  B. Find a product for which maximum orders were placed
      
-  B. 
+     select product_code, count(order_number) as total_orders
+     from sales_order_orc group by product_code 
+     order by total_orders;
      
-     
+     O/P:
+         product_code    total_orders
+         S18_3232        52
+   
+  C.Calculate the total sales for each quarter
+  
+    select qtr_id, round(sum(sales),4) as quarterly_sales
+    from sales_order_orc group by qtr_id
+    order by qtr_id; 
+   
+     O/P:
+        qtr_id  quarterly_sales
+        1       2350817.7265
+        2       2048120.3029
+        3       1758910.809
+        4       3874780.0109
+        
+  D.In which quarter sales was minimum
+  
+  
