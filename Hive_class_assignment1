@@ -71,7 +71,7 @@ c. Calculate the total sales for each quarter
 d. In which quarter sales was minimum
 e. In which country sales was maximum and in which country sales was minimum
 f. Calculate quartelry sales for each city
-h. Find a month for each year in which maximum number of quantities were sold
+g. Find a month for each year in which maximum number of quantities were sold
 
 
   A. Calculatye total sales per year
@@ -108,5 +108,41 @@ h. Find a month for each year in which maximum number of quantities were sold
         4       3874780.0109
         
   D.In which quarter sales was minimum
+       select qtr_id, sum(sales) as quarterly_sales from sales_order_orc 
+       group by qtr_id
+       order by quarterly_sales 
+       limit 1;
+
+  E.In which country sales was maximum and in which country sales was minimum
   
+     (select country, sum(sales) as country_sales from sales_order_orc
+     group by country
+     order by country_sales  limit 1
+     )
+     unoion
+     (
+     select country, sum(sales) as country_sales from sales_order_orc
+     group by country
+     order by country_sales desc limit 1) ;
+     
   
+  F.Calculate quartelry sales for each city 
+      
+      
+      select city, qtr_id, ROUND(SUM(sales), 3) as city_quarterly_sales
+     from sales_order_data
+     group by city, qtr_id
+     order by city, qtr_id;
+     
+G.Find a month for each year in which maximum number of quantities were sold
+
+          select year_id,month_id, quantity from(
+                        select tmp.*, 
+                        rank() over (partition by year_id order by quantity desc) as ranks
+                        from(
+                                 select year_id, month_id, sum(quantityordered) as quantity
+                                 from sales_order_data 
+                                 group by year_id, month_id
+                             )tmp
+                            )tmp2
+          where ranks = 1;
