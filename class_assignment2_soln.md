@@ -33,5 +33,20 @@ Now, after inserting 50,000 records in this table, I want to know the total reve
             
          3. Load data into partition table
          
-            insert overwrite transaction_partition partition(month) select cust_id,amount,month,country from transaction_details; 
+            insert overwrite transaction_partition partition(month) select cust_id,amount,month,country from transaction_details;
+            
+            
+ Q4.How can you add a new partition for the month December in the above partitioned table?           
+            
+       ALTER TABLE transaction_partition ADD PARTITION (month=’Dec’)
+       
+ Q5.I am inserting data into a table based on partitions dynamically. But, I received an error – FAILED ERROR IN SEMANTIC ANALYSIS: Dynamic partition strict mode requires at least one static partition column. How will you remove this error?
+ 
+  
+      To remove this error some hive properties needed to be change
+      
+      SET hive.exec.dynamic.partition = true;
+      SET hive.exec.dynamic.partition.mode = nonstrict;
+      
+Q6.
   
