@@ -200,3 +200,67 @@ Now perform different joins operations on top of these tables
                        field.delim             ,                   
                        serialization.format    ,                   
                Time taken: 0.082 seconds, Fetched: 35 row(s)
+               
+              
+INNER JOIN 
+
+      select customers.*, casted_orders.* 
+      from customers
+      inner join casted_orders on customers.id=casted_orders.customer_id;
+    
+
+      customers.id    customers.name  customers.age   customers.address       customers.salary       casted_orders.o_id       casted_orders.o_date                           casted_orders.customer_id      casted_orders.amount
+      2       Dikshant        24      hyd        24000   102     2022-03-21      2       22000
+      2       Dikshant        24      hyd        24000   103     2022-03-21      2       22000
+      3       Akshat          25      banglore   26000   104     2022-03-01      3       25000
+      4       Dhruv           31      delhi      90000   102     2022-03-21      4       32000
+      
+      
+      
+LEFT OUTER JOIN
+
+
+       select customers.*, casted_orders.* 
+       from customers
+       left outer join casted_orders on customers.id=casted_orders.customer_id;
+
+      customers.id    customers.name  customers.age   customers.address  customers.salary casted_orders.o_id  
+      casted_orders.o_date casted_orders.customer_id   casted_orders.amount
+      1       arjun           22      hyd     23000   NULL    NULL    NULL    NULL
+      2       Dikshant        24      hyd     24000   102     2022-03-21      2       22000
+      2       Dikshant        24      hyd     24000   103     2022-03-21      2       22000
+      3       Akshat          25      banglore26000   104     2022-03-01      3       25000
+      4       Dhruv           31      delhi   90000   102     2022-03-21      4       32000
+      Time taken: 6.506 seconds, Fetched: 5 row(s)
+      
+RIGHT OUTER JOIN
+
+      hive> select customers.*, casted_orders.* 
+      > from customers
+      > right outer join casted_orders on customers.id=casted_orders.customer_id;
+    
+    
+       customers.id   customers.name  customers.age   customers.address  customers.salary  casted_orders.o_id  
+       casted_orders.o_date  casted_orders.customer_id       casted_orders.amount
+      2       Dikshant        24      hyd     24000   102     2022-03-21      2       22000
+      2       Dikshant        24      hyd     24000   103     2022-03-21      2       22000
+      3       Akshat  25      banglore        26000   104     2022-03-01      3       25000
+      4       Dhruv   31      delhi   90000   102     2022-03-21      4       32000
+      Time taken: 6.263 seconds, Fetched: 4 row(s)
+      
+      
+FULL OUTER JOIN 
+
+      hive> select customers.*, casted_orders.* 
+      > from customers
+      > full outer join casted_orders on customers.id=casted_orders.customer_id;
+    
+      customers.id    customers.name  customers.age   customers.address customers.salary  casted_orders.o_id
+      casted_orders.o_date    casted_orders.customer_id       casted_orders.amount
+      1     arjun     22     hyd       23000   NULL    NULL    NULL    NULL
+      2     Dikshant  24     hyd       24000   103     2022-03-21      2       22000
+      2     Dikshant  24     hyd       24000   102     2022-03-21      2       22000
+      3     Akshat    25     banglore  26000   104     2022-03-01      3       25000
+      4     Dhruv     31     delhi     90000   102     2022-03-21      4       32000
+      Time taken: 1.434 seconds, Fetched: 5 row(s)
+      
