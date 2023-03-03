@@ -48,5 +48,57 @@ Now, after inserting 50,000 records in this table, I want to know the total reve
       SET hive.exec.dynamic.partition = true;
       SET hive.exec.dynamic.partition.mode = nonstrict;
       
-Q6.
+Q6.Suppose, I have a CSV file – ‘sample.csv’ present in ‘/temp’ directory with the following entries:
+   id first_name last_name email gender ip_address
+   How will you consume this CSV file into the Hive warehouse using built-in SerDe?
+
+         SerDe expands as  serializer/deserializer. A SerDe converts the data into encrypted binary format  
+       that we can process using Hive. Hive comes with several built-in SerDes and many other third-party SerDes are also available. 
+
+         Hive provides a specific SerDe for working with CSV files.
+
+         CREATE EXTERNAL TABLE sample
+
+         (id int, 
+          first_name string, 
+          last_name string, email string,
+          gender string, ip_address string) 
+          ROW FORMAT SERDE ‘org.apache.hadoop.hive.serde2.OpenCSVSerde’
+          with serdeproperties (
+          "separatorChar" = ",",
+          "quoteChar" = """,
+          "escapeChar" = "\"
+          STORED AS TEXTFILE LOCATION ‘/temp’;
   
+Q7.LOAD DATA LOCAL INPATH ‘Home/country/state/’
+   OVERWRITE INTO TABLE address;
+   The following statement failed to execute. What can be the cause?
+   
+         When data loading from local the path should contain 'file:///' so the path would be
+         'file:///Home/country/state/' 
+         
+Q8.Is it possible to add 100 nodes when we already have 100 nodes in Hive? If yes, how?
+
+   
+         Yes, we can add the nodes by following the below steps:
+
+         Step 1: Take a new system; create a new username and password
+         Step 2: Install SSH and with the master node setup SSH connections
+         Step 3: Add ssh public_rsa id key to the authorized keys file
+         Step 4: Add the new DataNode hostname, IP address, and other details in /etc/hosts slaves file:
+
+                192.168.1.102 slave3.in slave3  
+                
+         Step 5: Start the DataNode on a new node
+         Step 6: Login to the new node like suhadoop or:
+
+                 ssh -X hadoop@192.168.1.103
+                 
+         Step 7: Start HDFS of the newly added slave node by using the following command:
+
+                ./bin/hadoop-daemon.sh start data node
+                
+         Step 8: Check the output of the jps command on the new node
+         
+        
+Q9.        
