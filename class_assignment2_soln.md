@@ -264,3 +264,45 @@ FULL OUTER JOIN
       4     Dhruv     31     delhi     90000   102     2022-03-21      4       32000
       Time taken: 1.434 seconds, Fetched: 5 row(s)
       
+
+
+BUILD A DATA PIPELINE WITH HIVE
+
+Download a data from the given location - 
+https://archive.ics.uci.edu/ml/machine-learning-databases/00360/
+
+
+    create table AirQuality(
+    activity_date string,
+    time string,
+    co float,
+    S1 int,
+    NMHC int,
+    C6H6 float,
+    S2 int,
+    NOx int,
+    S3 int,
+    No2 int,
+    S4 int,
+    S5 int,
+    T float,
+    RH float,
+    AH float )
+    row format delimited
+    fields terminated by ','
+     ;
+  --- here i forgot the table property while creating   
+  hive> alter table AirQuality set TBLPROPERTIES('skip.header.line.count' = "1");  
+ 
+ hive> select activity_date,time,co from AirQuality limit 5;
+OK
+activity_date   time    co
+10-03-2004      18:00:00        2.6
+10-03-2004      19:00:00        2.0
+10-03-2004      20:00:00        2.2
+10-03-2004      21:00:00        2.2
+10-03-2004      22:00:00        1.6
+Time taken: 0.109 seconds, Fetched: 5 row(s)
+
+
+  
