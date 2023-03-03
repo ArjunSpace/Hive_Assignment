@@ -101,4 +101,102 @@ Q8.Is it possible to add 100 nodes when we already have 100 nodes in Hive? If ye
          Step 8: Check the output of the jps command on the new node
          
         
-Q9.        
+
+Hive Practical questions:
+
+Hive Join operations
+
+Create a  table named CUSTOMERS(ID | NAME | AGE | ADDRESS   | SALARY)
+Create a Second  table ORDER(OID | DATE | CUSTOMER_ID | AMOUNT
+)
+
+Now perform different joins operations on top of these tables
+(Inner JOIN, LEFT OUTER JOIN ,RIGHT OUTER JOIN ,FULL OUTER JOIN)
+
+
+
+      create table customers(
+          > id int,
+          > name string,
+          > age int,
+          > address string,
+          > salary int);
+          
+          
+      create table orders(
+          > o_id int,
+          > o_date string,
+          > customer_id int,
+          > amount int
+          > );
+       
+       orders table has date column and taken data as string, to cast the data into date datatype 
+       creating another table 
+       create table orders_casted(
+          > o_id int,
+          > o_date date,
+          > customer_id int,
+          > amount int)
+          > row format delimited 
+          > fields terminated by ','
+          > tblproperties("skip.header.line.count" = "1");
+          
+              hive> select * from customers;
+               OK
+               customers.id       customers.name  customers.age   customers.address       customers.salary
+               1       arjun      22      hyd             23000
+               2       Dikshant   24      hyd             24000
+               3       Akshat     25      banglore        26000
+               4       Dhruv      31      delhi           90000
+           
+           Load data from original table to transformed table 
+           
+               from orders insert overwrite table orders_casted select*;
+
+               hive> select * from orders_casted;
+               OK
+               102     2022-03-21      2       22000
+               103     2022-03-21      2       22000
+               104     2022-03-01      3       25000
+               102     2022-03-21      4       32000
+               Time taken: 0.117 seconds, Fetched: 4 row(s)
+
+               hive> describe formatted orders_casted;
+
+               OK
+               # col_name              data_type               comment             
+
+               o_id                    int                                         
+               o_date                  date                                        
+               customer_id             int                                         
+               amount                  int                                         
+
+               # Detailed Table Information             
+               Database:               default                  
+               Owner:                  root                     
+               CreateTime:             Fri Mar 03 06:32:47 UTC 2023     
+               LastAccessTime:         UNKNOWN                  
+               Retention:              0                        
+               Location:               hdfs://namenode:9000/user/hive/warehouse/orders_casted   
+               Table Type:             MANAGED_TABLE            
+               Table Parameters:                
+                       COLUMN_STATS_ACCURATE   {\"BASIC_STATS\":\"true\"}
+                       numFiles                1                   
+                       numRows                 5                   
+                       rawDataSize             110                 
+                       skip.header.line.count  1                   
+                       totalSize               115                 
+                       transient_lastDdlTime   1677825376          
+
+               # Storage Information            
+               SerDe Library:          org.apache.hadoop.hive.serde2.lazy.LazySimpleSerDe       
+               InputFormat:            org.apache.hadoop.mapred.TextInputFormat         
+               OutputFormat:           org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat       
+               Compressed:             No                       
+               Num Buckets:            -1                       
+               Bucket Columns:         []                       
+               Sort Columns:           []                       
+               Storage Desc Params:             
+                       field.delim             ,                   
+                       serialization.format    ,                   
+               Time taken: 0.082 seconds, Fetched: 35 row(s)
