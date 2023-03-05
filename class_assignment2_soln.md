@@ -293,16 +293,75 @@ https://archive.ics.uci.edu/ml/machine-learning-databases/00360/
      ;
   --- here i forgot the table property while creating   
   hive> alter table AirQuality set TBLPROPERTIES('skip.header.line.count' = "1");  
+  
+ LOADING DATA 
  
- hive> select activity_date,time,co from AirQuality limit 5;
-OK
-activity_date   time    co
-10-03-2004      18:00:00        2.6
-10-03-2004      19:00:00        2.0
-10-03-2004      20:00:00        2.2
-10-03-2004      21:00:00        2.2
-10-03-2004      22:00:00        1.6
-Time taken: 0.109 seconds, Fetched: 5 row(s)
+      load data inpath 'data/airquality/airquality.csv' into table AirQuality
+ 
+ SELECT STATEMENT
+ 
+       hive> select activity_date,time,co from AirQuality limit 5;
+      OK
+      activity_date   time            co
+      10-03-2004      18:00:00        2.6
+      10-03-2004      19:00:00        2.0
+      10-03-2004      20:00:00        2.2
+      10-03-2004      21:00:00        2.2
+      10-03-2004      22:00:00        1.6
+      Time taken: 0.109 seconds, Fetched: 5 row(s)
+   
+GROUP BY STATEMENT 
 
+      hive> select activity_date, sum(co)as sum_co,avg(s1) as s1_avg from AirQuality
+          > group by activity_date limit 10;
+      WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine using Hive 1.X releases.
+      Query ID = root_20230305161438_44796de7-bd6d-4f57-a276-899ad0a1bc0c
+      Total jobs = 1
+      Launching Job 1 out of 1
+      Number of reduce tasks not specified. Estimated from input data size: 1
+      In order to change the average load for a reducer (in bytes):
+        set hive.exec.reducers.bytes.per.reducer=<number>
+      In order to limit the maximum number of reducers:
+        set hive.exec.reducers.max=<number>
+      In order to set a constant number of reducers:
+        set mapreduce.job.reduces=<number>
+      Job running in-process (local Hadoop)
+      2023-03-05 16:14:40,188 Stage-1 map = 100%,  reduce = 100%
+      Ended Job = job_local1181967307_0003
+      MapReduce Jobs Launched: 
+      Stage-Stage-1:  HDFS Read: 4714450 HDFS Write: 0 SUCCESS
+      Total MapReduce CPU Time Spent: 0 msec
+      OK
+      activity_date   sum_co                  s1_avg
+      01-01-2005      -150.90000021457672     1114.25
+      01-02-2005      68.79999965429306       1250.1666666666667
+      01-03-2005      24.499999850988388      820.1666666666666
+      01-04-2004      61.19999951124191       1063.8333333333333
+      01-04-2005      -174.5                  903.2916666666666
+      01-05-2004      -152.70000022649765     1097.5
+      01-06-2004      -757.9999999031425      1135.5833333333333
+      01-07-2004      51.900000393390656      1130.5833333333333
+      01-08-2004      23.600000113248825      974.1666666666666
+      01-09-2004      53.70000022649765       1060.5833333333333
+      Time taken: 1.309 seconds, Fetched: 10 row(s)
+
+
+ORDER BY 
+
+     hive> select * from AirQuality
+     > order by time desc limit 10;
+      airquality.activity_date        airquality.time airquality.co   airquality.s1   airquality.nmhc airquality.c6h6 airquality.s2   airquality.nox  airquality.s3           airquality.no2  airquality.s4    airquality.s5     airquality.t      airquality.rh         airquality.ah
+      16-03-2004      23:00:00        1.7     1201    88      9.1     943     130     935     117     1560    1362    16.7    48.9    0.9226
+      15-03-2004      23:00:00        1.4     1142    67      6.9     852     89      1008    101     1547    1164    15.3    61.4    1.058
+      13-03-2004      23:00:00        2.6     1418    116     10.9    1010    172     892     130     1603    1536    14.7    49.3    0.8193
+      18-03-2004      23:00:00        1.7     1262    -200    8.3     911     95      948     99      1545    1062    13.1    64.2    0.9606
+      14-03-2004      23:00:00        2.2     1349    79      8.8     933     152     933     119     1617    1349    14.7    55.9    0.9314
+      11-03-2004      23:00:00        1.0     913     26      2.6     629     47      1565    53      1252    552     8.2     60.8    0.6657
+      12-03-2004      23:00:00        5.4     1677    367     21.8    1346    300     741     134     2062    1657    9.7     64.6    0.7771
+      19-03-2004      23:00:00        2.1     1215    -200    8.3     912     127     948     109     1547    993     14.2    58.3    0.938
+      03-04-2005      23:00:00        1.2     1100    -200    5.1     769     170     722     128     1147    1049    14.3    52.5    0.8497
+      10-03-2004      23:00:00        1.2     1197    38      4.7     750     89      1337    96      1393    949     11.2    59.2    0.7848
+      Time taken: 1.329 seconds, Fetched: 10 row(s)
+    
 
   
