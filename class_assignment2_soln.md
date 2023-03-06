@@ -143,6 +143,7 @@ Now perform different joins operations on top of these tables
           
               hive> select * from customers;
                OK
+               
                customers.id       customers.name  customers.age   customers.address       customers.salary
                1       arjun      22      hyd             23000
                2       Dikshant   24      hyd             24000
@@ -154,6 +155,8 @@ Now perform different joins operations on top of these tables
                from orders insert overwrite table orders_casted select*;
 
                hive> select * from orders_casted;
+               
+               
                OK
                102     2022-03-21      2       22000
                103     2022-03-21      2       22000
@@ -314,6 +317,8 @@ GROUP BY STATEMENT
 
       hive> select activity_date, sum(co)as sum_co,avg(s1) as s1_avg from AirQuality
           > group by activity_date limit 10;
+          
+          
       WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine using Hive 1.X releases.
       Query ID = root_20230305161438_44796de7-bd6d-4f57-a276-899ad0a1bc0c
       Total jobs = 1
@@ -364,4 +369,57 @@ ORDER BY
       Time taken: 1.329 seconds, Fetched: 10 row(s)
     
 
+REGEXP
+
+
+RLIKE FUNCTION 
+
+      hive> select * from AirQuality
+          > where activity_date RLIKE '(2004)$';
+
+      hive> select * from AirQuality
+          > where activity_date RLIKE '^(30)' LIMIT 20;
+      OK
+      30-03-2004      00:00:00        1.0     899     33      2.6     630     57      1418    76      1050    425     13.1    26.8    0.4023
+      30-03-2004      01:00:00        0.7     866     33      1.8     569     41      1468    66      1055    436     11.6    33.6    0.4595
+      30-03-2004      02:00:00        0.7     900     32      1.7     563     46      1402    73      1130    618     10.5    42.9    0.5442
+      30-03-2004      03:00:00        0.8     949     25      1.4     540     -200    1457    -200    1104    747     11.7    38.7    0.5298
+      30-03-2004      04:00:00        -200.0  897     29      1.3     529     41      1462    69      1101    693     12.2    37.2    0.5277
+      30-03-2004      05:00:00        0.7     956     26      2.3     605     52      1341    71      1117    691     12.9    33.9    0.5037
+      30-03-2004      06:00:00        1.1     1054    86      5.3     779     111     1080    98      1266    1013    11.3    40.3    0.5376
+      30-03-2004      07:00:00        2.6     1343    294     13.4    1096    191     839     115     1587    1311    11.9    38.4    0.5341
+      30-03-2004      08:00:00        4.0     1584    664     23.8    1399    244     642     130     1947    1675    13.3    35.6    0.5416
+      30-03-2004      09:00:00        4.2     1556    695     21.5    1337    283     674     150     1852    1689    16.3    28.8    0.5305
+      30-03-2004      10:00:00        4.7     1565    735     21.0    1324    320     695     159     1872    1688    17.9    28.2    0.5741
+      30-03-2004      11:00:00        3.9     1429    649     18.4    1251    249     734     146     1754    1548    18.3    26.6    0.5529
+      30-03-2004      12:00:00        3.7     1419    586     18.9    1267    219     742     138     1763    1490    20.8    22.5    0.5463
+      30-03-2004      13:00:00        3.4     1373    546     17.1    1213    200     791     128     1711    1354    22.4    20.0    0.5352
+      30-03-2004      14:00:00        2.2     1185    245     10.4    992     138     942     97      1448    1014    20.9    21.7    0.5295
+      30-03-2004      15:00:00        1.9     1122    178     8.0     897     118     991     91      1372    831     19.1    26.5    0.579
+      30-03-2004      16:00:00        1.6     1085    130     6.2     820     99      1060    81      1325    699     18.1    30.6    0.6295
+      30-03-2004      17:00:00        2.1     1249    151     9.7     968     112     874     99      1527    926     17.3    34.7    0.6788
+      30-03-2004      18:00:00        2.2     1236    272     9.6     962     117     853     101     1532    928     15.8    40.4    0.7228
+      30-03-2004      19:00:00        2.7     1334    301     11.9    1047    129     815     106     1638    1038    15.9    42.0    0.7541
+      Time taken: 0.089 seconds, Fetched: 20 row(s)
+
+
+REGEXP FUNCTION
+
+      hive> select regexp_extract(activity_date, '2004',0)as year_2004 from AirQuality;
   
+ALTER 
+
+      hive> alter table AirQuality rename to Airquality;
+      OK
+      Time taken: 0.067 seconds
+
+
+DISTINCT
+      
+      hive> select distinct activity_date from AirQuality;
+
+VIEWS
+      hive> create view Red_zone as
+          > select * from Airquality
+          > where co > 1.5;
+      select * from Red_zone;
