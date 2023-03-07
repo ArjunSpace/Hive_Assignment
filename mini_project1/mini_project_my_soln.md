@@ -356,3 +356,158 @@ LOAD DATA
       Wasim   433
       Zeeshan         542
       Time taken: 1.398 seconds, Fetched: 70 row(s)
+      
+   
+7. Total Feedback that each agent have received
+
+      select agent_name, sum(total_feedback) as total_feedback from agent_performance
+      group by agent_name;
+
+-----------------------------------------------------------------------
+      agent_name      total_feedback
+      
+      Abhishek        0
+      Aditya  0
+      Aditya Shinde   153
+      Aditya_iot      131
+      Amersh  0
+      Ameya Jain      228
+      Anirudh         39
+      Ankit Sharma    0
+      Ankitjha        3
+      Anurag Tiwari   3
+      Aravind         233
+      Ashad Nasim     9
+      Ashish  0
+      Ayushi Mishra   329
+      Bharath         247
+      Boktiar Ahmed Bappy     311
+      Chaitra K Hiremath      37
+      Deepranjan Gupta        312
+      Dibyanshu       0
+      Harikrishnan Shaji      231
+      Hitesh Choudhary        0
+      Hrisikesh Neogi 367
+      Hyder Abbas     0
+      Ineuron Intelligence    0
+      Ishawant Kumar  202
+      Jawala Prakash  250
+      Jayant Kumar    70
+      Jaydeep Dixit   305
+      Khushboo Priya  289
+      Madhulika G     281
+      Mahak   5
+      Mahesh Sarade   216
+      Maitry  347
+      Maneesh         3
+      Manjunatha A    254
+      Mithun S        364
+      Mukesh  17
+      Mukesh Rao      5
+      Muskan Garg     37
+      Nandani Gupta   308
+      Nishtha Jain    257
+      Nitin M 0
+      Prabir Kumar Satapathy  222
+      Prateek _iot    107
+      Prerna Singh    235
+      Rishav Dash     264
+      Rohan   0
+      Saif Khan       0
+      Saikumarreddy N 290
+      Samprit         0
+      Sandipan Saha   18
+      Sanjeev Kumar   311
+      Sanjeevan       0
+      Saurabh Shukla  8
+      Shiva Srivastava        46
+      Shivan K        243
+      Shivan_S        4
+      Shivananda Sonwane      263
+      Shubham Sharma  300
+      Sowmiya Sivakumar       141
+      Spuri   0
+      Sudhanshu Kumar 2
+      Suraj S Bilgi   15
+      Swati   302
+      Tarun   6
+      Uday Mishra     0
+      Vasanth P       0
+      Vivek   20
+      Wasim   284
+      Zeeshan         335
+      Time taken: 1.272 seconds, Fetched: 70 row(s)
+      
+8. Agent name who have average rating between 3.5 to 4 
+
+      > select * from (
+      > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
+      > where avg_rating != 0
+      > group by agent_name)tmp
+      > where tavg_rating between 3.5 and 4;
+
+-------------------------------------------------------------
+
+tmp.agent_name  tmp.tavg_rating
+Ankitjha        4.0
+Mithun S        3.931666705343458    
+      
+ 
+      
+9. Agent name who have rating less than 3.5 
+
+    > select * from (
+    > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
+    > where avg_rating != 0
+    > group by agent_name)tmp
+    > where tavg_rating < 3.5;
+
+tmp.agent_name  tmp.tavg_rating
+Anirudh         3.224999984105428
+Anurag Tiwari   2.75
+Ashad Nasim     2.5
+Mahak   3.0
+Maneesh         2.5
+Mukesh Rao      2.5566666523615518
+Tarun   1.5
+Vivek   3.0039999961853026
+Time taken: 1.343 seconds, Fetched: 8 row(s)
+
+10. Agent name who have rating more than 4.5 
+
+hive> select * from (
+    > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
+    > where avg_rating != 0
+    > group by agent_name)tmp
+    > where tavg_rating > 4.5;
+    
+tmp.agent_name  tmp.tavg_rating
+Aditya Shinde   4.500833352406819
+Aravind         4.674285752432687
+Bharath         4.711052618528667
+Jaydeep Dixit   4.524285759244647
+Mukesh  4.644999980926514
+Prateek _iot    4.571874976158142
+Saikumarreddy N 4.570000024942251
+Shivananda Sonwane      4.534999992166247
+Shubham Sharma  4.607619081224714
+Sudhanshu Kumar 5.0
+Suraj S Bilgi   4.680000066757202
+Wasim   4.500000029802322
+Time taken: 1.407 seconds, Fetched: 12 row(s)
+
+11. How many feedback agents have received more than 4.5 average
+
+hive> select count(distinct agent_name) as total_agents from agent_performance
+    > where avg_rating > 4.5;
+    
+total_agents
+47
+
+14. Find the number of chat on which they have received a feedback 
+
+hive> select count(*) from agent_performance
+    > where avg_rating = 0;
+1429
+
+    
