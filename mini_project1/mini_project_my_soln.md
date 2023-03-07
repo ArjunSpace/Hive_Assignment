@@ -220,81 +220,139 @@ LOAD DATA
       
 5. Total working days for each agents 
       
-       > select agent_name, count(agent_name)as Total_working_days from agent_performance
-       > group by agent_name
-       > order by agent_name;
+      hive> select agent, count(distinct login_date) as working_days from loging_report
+    > group by agent
+    > order by agent;
       
 --------------------------------------------------------------------------------------      
-      agent_name      total_working_days
-      Abhishek        30
-      Aditya  30
-      Aditya Shinde   30
-      Aditya_iot      30
-      Amersh  30
-      Ameya Jain      30
-      Anirudh         30
-      Ankit Sharma    30
-      Ankitjha        30
-      Anurag Tiwari   30
-      Aravind         30
-      Ashad Nasim     30
-      Ashish  60
-      Ayushi Mishra   30
-      Bharath         30
-      Boktiar Ahmed Bappy     30
-      Chaitra K Hiremath      30
-      Deepranjan Gupta        30
-      Dibyanshu       30
-      Harikrishnan Shaji      30
-      Hitesh Choudhary        30
-      Hrisikesh Neogi 30
-      Hyder Abbas     30
-      Ineuron Intelligence    30
-      Ishawant Kumar  30
-      Jawala Prakash  30
-      Jayant Kumar    30
-      Jaydeep Dixit   30
-      Khushboo Priya  30
-      Madhulika G     30
-      Mahak   30
-      Mahesh Sarade   30
-      Maitry  30
-      Maneesh         30
-      Manjunatha A    30
-      Mithun S        30
-      Mukesh  30
-      Mukesh Rao      30
-      Muskan Garg     30
-      Nandani Gupta   30
-      Nishtha Jain    30
-      Nitin M 30
-      Prabir Kumar Satapathy  30
-      Prateek _iot    30
-      Prerna Singh    30
-      Rishav Dash     60
-      Rohan   30
-      Saif Khan       30
-      Saikumarreddy N 30
-      Samprit         30
-      Sandipan Saha   30
-      Sanjeev Kumar   30
-      Sanjeevan       30
-      Saurabh Shukla  30
-      Shiva Srivastava        30
-      Shivan K        30
-      Shivan_S        30
-      Shivananda Sonwane      30
-      Shubham Sharma  30
-      Sowmiya Sivakumar       30
-      Spuri   30
-      Sudhanshu Kumar 30
-      Suraj S Bilgi   30
-      Swati   30
-      Tarun   30
-      Uday Mishra     30
-      Vasanth P       30
-      Vivek   30
-      Wasim   30
-      Zeeshan         30
-      Time taken: 2.566 seconds, Fetched: 70 row(s)
+      agent   working_days
+     
+      Aditya Shinde   1
+      Aditya_iot      8
+      Amersh  2
+      Ameya Jain      7
+      Ankitjha        2
+      Anurag Tiwari   10
+      Aravind 7
+      Ayushi Mishra   9
+      Bharath 8
+      Boktiar Ahmed Bappy     9
+      Chaitra K Hiremath      7
+      Deepranjan Gupta        10
+      Dibyanshu       9
+      Harikrishnan Shaji      9
+      Hrisikesh Neogi 9
+      Hyder Abbas     2
+      Ineuron Intelligence    1
+      Ishawant Kumar  11
+      Jawala Prakash  9
+      Jaydeep Dixit   7
+      Khushboo Priya  8
+      Madhulika G     8
+      Mahesh Sarade   8
+      Maitry  5
+      Manjunatha A    7
+      Mithun S        8
+      Mukesh  2
+      Muskan Garg     6
+      Nandani Gupta   9
+      Nishtha Jain    8
+      Nitin M 1
+      Prabir Kumar Satapathy  7
+      Prateek _iot    11
+      Prerna Singh    9
+      Rishav Dash     7
+      Saikumarreddy N 7
+      Sanjeev Kumar   9
+      Saurabh Shukla  4
+      Shiva Srivastava        8
+      Shivan K        8
+      Shivananda Sonwane      10
+      Shubham Sharma  11
+      Sowmiya Sivakumar       8
+      Sudhanshu Kumar 6
+      Suraj S Bilgi   2
+      Swati   4
+      Tarun   1
+      Wasim   9
+      Zeeshan 9
       
+6. Total query that each agent have taken
+
+       select agent_name, sum(total_chats) as total_chats from agent_performance
+       group by agent_name;
+      
+     
+      agent_name      total_chats
+      
+      Abhishek        0
+      Aditya  0
+      Aditya Shinde   277
+      Aditya_iot      231
+      Amersh  0
+      Ameya Jain      322
+      Anirudh         81
+      Ankit Sharma    0
+      Ankitjha        5
+      Anurag Tiwari   4
+      Aravind         366
+      Ashad Nasim     18
+      Ashish  0
+      Ayushi Mishra   514
+      Bharath         369
+      Boktiar Ahmed Bappy     452
+      Chaitra K Hiremath      64
+      Deepranjan Gupta        493
+      Dibyanshu       1
+      Harikrishnan Shaji      381
+      Hitesh Choudhary        1
+      Hrisikesh Neogi 578
+      Hyder Abbas     0
+      Ineuron Intelligence    0
+      Ishawant Kumar  338
+      Jawala Prakash  439
+      Jayant Kumar    127
+      Jaydeep Dixit   512
+      Khushboo Priya  446
+      Madhulika G     469
+      Mahak   7
+      Mahesh Sarade   364
+      Maitry  542
+      Maneesh         4
+      Manjunatha A    413
+      Mithun S        503
+      Mukesh  19
+      Mukesh Rao      5
+      Muskan Garg     56
+      Nandani Gupta   560
+      Nishtha Jain    373
+      Nitin M 0
+      Prabir Kumar Satapathy  299
+      Prateek _iot    190
+      Prerna Singh    401
+      Rishav Dash     409
+      Rohan   0
+      Saif Khan       0
+      Saikumarreddy N 364
+      Samprit         1
+      Sandipan Saha   30
+      Sanjeev Kumar   507
+      Sanjeevan       0
+      Saurabh Shukla  16
+      Shiva Srivastava        53
+      Shivan K        357
+      Shivan_S        7
+      Shivananda Sonwane      441
+      Shubham Sharma  510
+      Sowmiya Sivakumar       206
+      Spuri   0
+      Sudhanshu Kumar 2
+      Suraj S Bilgi   28
+      Swati   524
+      Tarun   22
+      Uday Mishra     0
+      Vasanth P       0
+      Vivek   44
+      Wasim   433
+      Zeeshan         542
+      Time taken: 1.398 seconds, Fetched: 70 row(s)
