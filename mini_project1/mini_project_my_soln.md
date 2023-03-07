@@ -220,9 +220,9 @@ LOAD DATA
       
 5. Total working days for each agents 
       
-      hive> select agent, count(distinct login_date) as working_days from loging_report
-    > group by agent
-    > order by agent;
+      select agent, count(distinct login_date) as working_days from loging_report
+      group by agent
+      order by agent;
       
 --------------------------------------------------------------------------------------      
       agent   working_days
@@ -282,7 +282,7 @@ LOAD DATA
        select agent_name, sum(total_chats) as total_chats from agent_performance
        group by agent_name;
       
-     
+-------------------------------------------------------------------------     
       agent_name      total_chats
       
       Abhishek        0
