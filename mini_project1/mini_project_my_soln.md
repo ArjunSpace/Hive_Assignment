@@ -24,7 +24,8 @@ COPY DATA TO NAMENODE
 PUT DATA INTO HDFS LOCATION 
 
     root@edc538cf5722:/# hdfs dfs -put AgentLogingReport.csv  /data/openbeer/nueron/logingreport
-    2023-03-07 04:43:40,312 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+    
+   
 
 LOAD DATA INTO TABLE
 
