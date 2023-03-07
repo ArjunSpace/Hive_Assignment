@@ -140,8 +140,9 @@ LOAD DATA
        > group by agent_name
        > order by agent_name;
       
-      
+--------------------------------------------------------------------------------------------
       agent_name             avg_rating
+      
       Abhishek               0.0
       Aditya                 0.0
       Aditya Shinde          1.8
@@ -213,6 +214,7 @@ LOAD DATA
       Wasim                2.4
       Zeeshan              2.287
       Time taken: 2.52 seconds, Fetched: 70 row(s
+
       
 5. Total working days for each agents 
       
