@@ -60,8 +60,9 @@ LOAD DATA
 
       hive> select count( distinct agent_name) from agent_performance;
  
-  
+---------------------------------------------------------------------  
       agent_name
+      
       Abhishek 
       Aditya 
       Aditya Shinde
@@ -222,7 +223,7 @@ LOAD DATA
        > group by agent_name
        > order by agent_name;
       
-      
+--------------------------------------------------------------------------------------      
       agent_name      total_working_days
       Abhishek        30
       Aditya  30
