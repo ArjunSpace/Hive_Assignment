@@ -503,6 +503,7 @@ hive> select count(distinct agent_name) as total_agents from agent_performance
     
 total_agents
 47
+12. 
 
 14. Find the number of chat on which they have received a feedback 
 
@@ -557,4 +558,132 @@ drwxr-xr-x   - root supergroup          0 2023-03-08 14:10 /output_file/left_joi
 drwxr-xr-x   - root supergroup          0 2023-03-08 14:11 /output_file/right_join
 
 
+create table loging_report_partition(
+s_no int,
+login_Date string,
+Login_time string,
+logout_time string,
+Duration string)
+partitioned by (Agent string)
+;
 
+
+hive> insert overwrite table loging_report_partition partition(Agent)select s_no,login_Date,login_time,logout_time,Duration,Agent from loging_report;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230308143543_e21e525b-d3b0-4567-86ef-0fd11ca8b3f5
+Total jobs = 3
+Launching Job 1 out of 3
+Number of reduce tasks is set to 0 since there's no reduce operator
+Job running in-process (local Hadoop)
+2023-03-08 14:35:45,053 Stage-1 map = 0%,  reduce = 0%
+2023-03-08 14:35:50,060 Stage-1 map = 100%,  reduce = 0%
+Ended Job = job_local340124104_0006
+Stage-4 is selected by condition resolver.
+Stage-3 is filtered out by condition resolver.
+Stage-5 is filtered out by condition resolver.
+Moving data to directory hdfs://namenode:9000/user/hive/warehouse/project1.db/loging_report_partition/.hive-staging_hive_2023-03-08_14-35-43_586_2330934402172339967-1/-ext-10000
+Loading data to table project1.loging_report_partition partition (agent=null)
+
+Loaded : 49/49 partitions.
+         Time taken to load dynamic partitions: 8.549 seconds
+         Time taken for adding to write entity : 0.005 seconds
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 84023 HDFS Write: 56392 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 28.618 seconds
+
+
+root@edc538cf5722:/# hdfs dfs -ls /user/hive/warehouse/project1.db/loging_report_partition
+Found 49 items
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Aditya Shinde
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Aditya_iot
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Amersh
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Ameya Jain
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Ankitjha
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Anurag Tiwari
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Aravind
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Ayushi Mishra
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Bharath
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Boktiar Ahmed Bappy
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Chaitra K Hiremath
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:36 /user/hive/warehouse/project1.db/loging_report_partition/agent=Deepranjan Gupta
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Dibyanshu
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Harikrishnan Shaji
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Hrisikesh Neogi
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Hyder Abbas
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Ineuron Intelligence
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Ishawant Kumar
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Jawala Prakash
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Jaydeep Dixit
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Khushboo Priya
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:36 /user/hive/warehouse/project1.db/loging_report_partition/agent=Madhulika G
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Mahesh Sarade
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Maitry
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Manjunatha A
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Mithun S
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:36 /user/hive/warehouse/project1.db/loging_report_partition/agent=Mukesh
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Muskan Garg
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Nandani Gupta
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Nishtha Jain
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Nitin M
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Prabir Kumar Satapathy
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Prateek _iot
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Prerna Singh
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Rishav Dash
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Saikumarreddy N
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Sanjeev Kumar
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Saurabh Shukla
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Shiva Srivastava
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Shivan K
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Shivananda Sonwane
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Shubham Sharma
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Sowmiya Sivakumar
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Sudhanshu Kumar
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Suraj S Bilgi
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Swati
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Tarun
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Wasim
+drwxrwxr-x   - root supergroup          0 2023-03-08 14:35 /user/hive/warehouse/project1.db/loging_report_partition/agent=Zeeshan
+
+
+create table loging_partition_bucketed(
+s_no int,
+login_Date string,
+Login_time string,
+logout_time string,
+Duration string)
+partitioned by (Agent string)
+clustered by (s_no)
+into 3 buckets
+row format delimited
+fields terminated by ','
+
+insert overwrite table loging_partition_bucketed partition(Agent) select s_no,login_Date,Login_time,logout_time,Duration,Agent from loging_report;
+WARNING: Hive-on-MR is deprecated in Hive 2 and may not be available in the future versions. Consider using a different execution engine (i.e. spark, tez) or using Hive 1.X releases.
+Query ID = root_20230308145757_d57cb7aa-6b1a-42c9-b8b4-7db8a5256325
+Total jobs = 1
+Launching Job 1 out of 1
+Number of reduce tasks determined at compile time: 3
+In order to change the average load for a reducer (in bytes):
+  set hive.exec.reducers.bytes.per.reducer=<number>
+In order to limit the maximum number of reducers:
+  set hive.exec.reducers.max=<number>
+In order to set a constant number of reducers:
+  set mapreduce.job.reduces=<number>
+Job running in-process (local Hadoop)
+2023-03-08 14:57:59,586 Stage-1 map = 100%,  reduce = 0%
+2023-03-08 14:58:05,619 Stage-1 map = 100%,  reduce = 33%
+2023-03-08 14:58:17,660 Stage-1 map = 100%,  reduce = 67%
+2023-03-08 14:58:27,691 Stage-1 map = 100%,  reduce = 100%
+Ended Job = job_local1605565131_0001
+Loading data to table project1.loging_partition_bucketed partition (agent=null)
+
+Loaded : 49/49 partitions.
+         Time taken to load dynamic partitions: 7.967 seconds
+         Time taken for adding to write entity : 0.007 seconds
+MapReduce Jobs Launched: 
+Stage-Stage-1:  HDFS Read: 221404 HDFS Write: 101431 SUCCESS
+Total MapReduce CPU Time Spent: 0 msec
+OK
+Time taken: 45.296 seconds
