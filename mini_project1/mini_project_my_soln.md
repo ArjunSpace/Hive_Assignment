@@ -440,28 +440,31 @@ LOAD DATA
       
 8. Agent name who have average rating between 3.5 to 4 
 
-      > select * from (
-      > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
-      > where avg_rating != 0
-      > group by agent_name)tmp
-      > where tavg_rating between 3.5 and 4;
+     
+         > select * from (
+         > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
+         > where avg_rating != 0
+         > group by agent_name)tmp
+         > where tavg_rating between 3.5 and 4;
 
 -------------------------------------------------------------
 
-tmp.agent_name  tmp.tavg_rating
-Ankitjha        4.0
-Mithun S        3.931666705343458    
+         tmp.agent_name  tmp.tavg_rating
+         Ankitjha        4.0
+         Mithun S        3.931666705343458    
       
  
       
 9. Agent name who have rating less than 3.5 
 
-    > select * from (
-    > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
-    > where avg_rating != 0
-    > group by agent_name)tmp
-    > where tavg_rating < 3.5;
-
+       > select * from (
+       > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
+       > where avg_rating != 0
+       > group by agent_name)tmp
+       > where tavg_rating < 3.5;
+       
+       
+-----------------------------------------------------------
       
       tmp.agent_name  tmp.tavg_rating
       Anirudh         3.224999984105428
@@ -473,95 +476,98 @@ Mithun S        3.931666705343458
       Tarun   1.5
       Vivek   3.0039999961853026
       Time taken: 1.343 seconds, Fetched: 8 row(s)
+      
 
 10. Agent name who have rating more than 4.5 
 
-       > select * from (
-       > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
-       > where avg_rating != 0
-       > group by agent_name)tmp
-       > where tavg_rating > 4.5;
+          > select * from (
+          > select agent_name, avg(avg_rating) as tavg_rating from agent_performance
+          > where avg_rating != 0
+          > group by agent_name)tmp
+          > where tavg_rating > 4.5;
     
-      
-      tmp.agent_name  tmp.tavg_rating
-      Aditya Shinde   4.500833352406819
-      Aravind         4.674285752432687
-      Bharath         4.711052618528667
-      Jaydeep Dixit   4.524285759244647
-      Mukesh  4.644999980926514
-      Prateek _iot    4.571874976158142
-      Saikumarreddy N 4.570000024942251
-      Shivananda Sonwane      4.534999992166247
-      Shubham Sharma  4.607619081224714
-      Sudhanshu Kumar 5.0
-      Suraj S Bilgi   4.680000066757202
-      Wasim   4.500000029802322
-      Time taken: 1.407 seconds, Fetched: 12 row(s)
+
+-------------------------------------------------------------------
+         tmp.agent_name  tmp.tavg_rating
+
+         Aditya Shinde   4.500833352406819
+         Aravind         4.674285752432687
+         Bharath         4.711052618528667
+         Jaydeep Dixit   4.524285759244647
+         Mukesh  4.644999980926514
+         Prateek _iot    4.571874976158142
+         Saikumarreddy N 4.570000024942251
+         Shivananda Sonwane      4.534999992166247
+         Shubham Sharma  4.607619081224714
+         Sudhanshu Kumar 5.0
+         Suraj S Bilgi   4.680000066757202
+         Wasim   4.500000029802322
+         Time taken: 1.407 seconds, Fetched: 12 row(s)
 
 11. How many feedback agents have received more than 4.5 average
 
 
-      > select count(distinct agent_name) as total_agents from agent_performance
-      > where avg_rating > 4.5;
-    
-      total_agents
-      47
+         > select count(distinct agent_name) as total_agents from agent_performance
+         > where avg_rating > 4.5;
+
+         total_agents
+         47
  
 
 14. Find the number of chat on which they have received a feedback 
 
-       > select count(*) from agent_performance
-       > where avg_rating = 0;
-       1429
+          > select count(*) from agent_performance
+          > where avg_rating = 0;
+          1429
 
 16. Perform inner join, left join and right join based on the agent column and after joining the table export that data into your local system.
 
-      hive> insert overwrite directory '/output_file/inner_join' row format delimited fields terminated by ','  
-          > select l.*,a.* from loging_report l
-          > inner join agent_performance a on l.agent = a.Agent_name 
-          > limit 20;
-    
-      
+             > insert overwrite directory '/output_file/inner_join' row format delimited fields terminated by ','  
+             > select l.*,a.* from loging_report l
+             > inner join agent_performance a on l.agent = a.Agent_name 
+             > limit 20;
+
+
       root@edc538cf5722:/# hdfs dfs -cat /output_file/inner_join/*
 
-      2023-03-08 14:06:45,317 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
-      85,Nandani Gupta,29-Jul-22,15:41:31,21:02:48,05:21:17,2,7/30/2022,Nandani Gupta,11,0:01:15,0:28:25,3.14,7
-      3,Nandani Gupta,30-Jul-22,15:04:24,17:31:07,02:26:42,2,7/30/2022,Nandani Gupta,11,0:01:15,0:28:25,3.14,7
-      985,Prerna Singh,20-Jul-22,13:06:26,13:09:26,00:03:00,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      971,Prerna Singh,20-Jul-22,14:58:25,20:57:36,05:59:11,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      878,Prerna Singh,21-Jul-22,13:01:46,13:17:03,00:15:17,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      876,Prerna Singh,21-Jul-22,14:01:37,14:05:15,00:03:38,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      746,Prerna Singh,22-Jul-22,15:03:29,21:07:20,06:03:51,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      660,Prerna Singh,23-Jul-22,15:03:12,21:09:19,06:06:06,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      514,Prerna Singh,25-Jul-22,15:01:23,18:23:58,03:22:34,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      496,Prerna Singh,25-Jul-22,18:28:21,21:03:43,02:35:22,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      427,Prerna Singh,26-Jul-22,15:05:30,21:02:08,05:56:38,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      426,Prerna Singh,26-Jul-22,15:05:30,15:07:27,00:01:56,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      393,Prerna Singh,26-Jul-22,21:25:27,21:33:57,00:08:30,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      391,Prerna Singh,26-Jul-22,21:55:51,22:03:21,00:07:29,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      388,Prerna Singh,26-Jul-22,22:17:56,22:19:56,00:02:00,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      336,Prerna Singh,27-Jul-22,13:11:06,20:58:35,07:47:29,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      110,Prerna Singh,29-Jul-22,12:08:23,12:11:35,00:03:11,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      91,Prerna Singh,29-Jul-22,15:08:22,17:20:49,02:12:27,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      75,Prerna Singh,29-Jul-22,17:47:06,21:03:44,03:16:37,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
-      16,Prerna Singh,30-Jul-22,12:32:28,14:10:08,01:37:40,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         2023-03-08 14:06:45,317 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+         85,Nandani Gupta,29-Jul-22,15:41:31,21:02:48,05:21:17,2,7/30/2022,Nandani Gupta,11,0:01:15,0:28:25,3.14,7
+         3,Nandani Gupta,30-Jul-22,15:04:24,17:31:07,02:26:42,2,7/30/2022,Nandani Gupta,11,0:01:15,0:28:25,3.14,7
+         985,Prerna Singh,20-Jul-22,13:06:26,13:09:26,00:03:00,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         971,Prerna Singh,20-Jul-22,14:58:25,20:57:36,05:59:11,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         878,Prerna Singh,21-Jul-22,13:01:46,13:17:03,00:15:17,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         876,Prerna Singh,21-Jul-22,14:01:37,14:05:15,00:03:38,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         746,Prerna Singh,22-Jul-22,15:03:29,21:07:20,06:03:51,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         660,Prerna Singh,23-Jul-22,15:03:12,21:09:19,06:06:06,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         514,Prerna Singh,25-Jul-22,15:01:23,18:23:58,03:22:34,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         496,Prerna Singh,25-Jul-22,18:28:21,21:03:43,02:35:22,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         427,Prerna Singh,26-Jul-22,15:05:30,21:02:08,05:56:38,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         426,Prerna Singh,26-Jul-22,15:05:30,15:07:27,00:01:56,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         393,Prerna Singh,26-Jul-22,21:25:27,21:33:57,00:08:30,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         391,Prerna Singh,26-Jul-22,21:55:51,22:03:21,00:07:29,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         388,Prerna Singh,26-Jul-22,22:17:56,22:19:56,00:02:00,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         336,Prerna Singh,27-Jul-22,13:11:06,20:58:35,07:47:29,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         110,Prerna Singh,29-Jul-22,12:08:23,12:11:35,00:03:11,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         91,Prerna Singh,29-Jul-22,15:08:22,17:20:49,02:12:27,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         75,Prerna Singh,29-Jul-22,17:47:06,21:03:44,03:16:37,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
+         16,Prerna Singh,30-Jul-22,12:32:28,14:10:08,01:37:40,1,7/30/2022,Prerna Singh,11,0:00:38,0:04:20,4.11,9
 
 
-      hive> insert overwrite directory '/output_file/left_join' row format delimited fields terminated by ','  
-          > select l.*,a.* from loging_report l
-          > left join agent_performance a on l.agent = a.Agent_name 
-          > limit 20;
+             > insert overwrite directory '/output_file/left_join' row format delimited fields terminated by ','  
+             > select l.*,a.* from loging_report l
+             > left join agent_performance a on l.agent = a.Agent_name 
+             > limit 20;
       
-      hive> insert overwrite directory '/output_file/right_join' row format delimited fields terminated by ','  
-          > select l.*,a.* from loging_report l
-          > right join agent_performance a on l.agent = a.Agent_name 
-          > limit 20;
+             > insert overwrite directory '/output_file/right_join' row format delimited fields terminated by ','  
+             > select l.*,a.* from loging_report l
+             > right join agent_performance a on l.agent = a.Agent_name 
+             > limit 20;
     
-      root@edc538cf5722:/# hdfs dfs -ls /output_file/         
-      Found 3 items
-      drwxr-xr-x   - root supergroup          0 2023-03-08 14:05 /output_file/inner_join
-      drwxr-xr-x   - root supergroup          0 2023-03-08 14:10 /output_file/left_join
-      drwxr-xr-x   - root supergroup          0 2023-03-08 14:11 /output_file/right_join
+            root@edc538cf5722:/# hdfs dfs -ls /output_file/         
+            Found 3 items
+            drwxr-xr-x   - root supergroup          0 2023-03-08 14:05 /output_file/inner_join
+            drwxr-xr-x   - root supergroup          0 2023-03-08 14:10 /output_file/left_join
+            drwxr-xr-x   - root supergroup          0 2023-03-08 14:11 /output_file/right_join
 
 PARTITIONING & BUCKETING
 
