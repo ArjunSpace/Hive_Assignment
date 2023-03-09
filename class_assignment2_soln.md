@@ -455,7 +455,14 @@ ALTER
 DISTINCT
       
       hive> select distinct activity_date from AirQuality;
+      
+      
+UNION 
 
+      (select * from airquality order by co desc limit 1)
+      union
+      (select * from airquality order by co limit 1);
+      
 VIEWS
 
           > create view Red_zone as
