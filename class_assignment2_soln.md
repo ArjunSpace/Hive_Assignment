@@ -382,6 +382,10 @@ GROUP BY STATEMENT
       01-09-2004      53.70000022649765       1060.5833333333333
       Time taken: 1.309 seconds, Fetched: 10 row(s)
 
+Fetch the result of the select operation in your local as a csv file 
+
+      insert overwrite directory '/user/hive/warehouse/outputfile/airquality.csv' row format delimited fields terminated by ',' 
+      select * from AirQuality;
 
 ORDER BY 
 
@@ -451,7 +455,8 @@ DISTINCT
       hive> select distinct activity_date from AirQuality;
 
 VIEWS
-      hive> create view Red_zone as
+
+          > create view Red_zone as
           > select * from Airquality
           > where co > 1.5;
       select * from Red_zone;
