@@ -326,8 +326,10 @@ https://archive.ics.uci.edu/ml/machine-learning-databases/00360/
     row format delimited
     fields terminated by ','
      ;
-  --- here i forgot the table property while creating   
-  hive> alter table AirQuality set TBLPROPERTIES('skip.header.line.count' = "1");  
+ 
+ --- here i forgot the table property while creating   
+ 
+      hive> alter table AirQuality set TBLPROPERTIES('skip.header.line.count' = "1");  
   
  LOADING DATA 
  
