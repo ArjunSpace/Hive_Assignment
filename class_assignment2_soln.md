@@ -69,15 +69,47 @@ Q6.Suppose, I have a CSV file – ‘sample.csv’ present in ‘/temp’ direct
           "quoteChar" = """,
           "escapeChar" = "\"
           STORED AS TEXTFILE LOCATION ‘/temp’;
-  
-Q7.LOAD DATA LOCAL INPATH ‘Home/country/state/’
+Q7. Suppose, I have a lot of small CSV files present in the input directory in HDFS and I want to create a single Hive table corresponding to these files. The data in these files are in the format: {id, name, e-mail, country}. Now, as we know, Hadoop performance degrades when we use lots of small files.So, how will you solve this problem where we want to create a single Hive table for lots of small files without degrading the performance of the system?
+
+      
+      Small files can be grouped by using SequenceFile format.
+      create table details(
+      id int,
+      name string,
+      e-mail string,
+      country string)
+      row format delimited
+      fields terminated by ',';
+
+      loading data into table 
+
+      insert data inapath '/input/' into table details;
+
+      creating table for storing data in sequencefile format
+      create table details_seqfile(
+      id int,
+      name string,
+      e-mail string,
+      country string)
+      row format delimited
+      fields terminated by ','
+      stored as sequencefile;
+
+      load data from details table
+
+      insert overwrite table details_seqfile select * from details;
+
+      so the all file will store in single file.
+
+
+Q8.LOAD DATA LOCAL INPATH ‘Home/country/state/’
    OVERWRITE INTO TABLE address;
    The following statement failed to execute. What can be the cause?
    
          When data loading from local the path should contain 'file:///' so the path would be
          'file:///Home/country/state/' 
          
-Q8.Is it possible to add 100 nodes when we already have 100 nodes in Hive? If yes, how?
+Q9.Is it possible to add 100 nodes when we already have 100 nodes in Hive? If yes, how?
 
    
          Yes, we can add the nodes by following the below steps:
